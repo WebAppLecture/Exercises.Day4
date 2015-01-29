@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Lösung zur 17. Aufgabe</title>
+<style>
+</style>
+</head>
+<body>
+<script>
+var rate = 1;
+
+function playAudio() {
+	var a = document.getElementById('audio');
+	
+	if(a.paused) {
+		if(a.ended)
+			a.currentTime = 0;
+		
+		document.getElementById('playbutton').innerHTML = 'Pausieren';
+		a.play();
+	} else {
+		document.getElementById('playbutton').innerHTML = 'Abspielen';
+		a.pause();
+	}
+}
+function stopAudio() {
+	var a = document.getElementById('audio');
+	
+	if(!a.paused)
+		playAudio();
+		
+	a.currentTime = 0;
+	
+}
+function slowAudio() {
+	rate = Math.max(0, rate - 0.1);
+	playbackAudio();
+}
+function fastAudio() {
+	rate = Math.min(2, rate + 0.1);
+	playbackAudio();
+}
+function playbackAudio() {
+	var a = document.getElementById('audio');
+	a.playbackRate = rate;
+	document.getElementById('playbackrate').innerHTML = "Die aktuelle Abspielrate beträgt " + Math.floor(rate * 100) + "%.";
+}
+</script>
+<audio id="audio" autobuffer>
+<source src="http://html5.florian-rappl.de/sample.ogg" type="audio/ogg" />
+<source src="http://html5.florian-rappl.de/sample.mp3" type="audio/mpeg" />
+Ihr Browser unterstützt noch kein HTML5-Audio! Bitte laden Sie sich einen modernen Browser wie <a href="http://opera.com" target="_blank">herunter</a>.
+</audio>
+<div id="controls"><button onclick="slowAudio();">Langsamer</button><button id="playbutton" onclick="playAudio();">Abspielen</button><button onclick="stopAudio();">Stopp</button><button onclick="fastAudio();">Schneller</button></div>
+<div id="playbackrate">Die aktuelle Abspielrate beträgt 100%.</div>
+<footer>&copy; <address style="display: inline;">Florian Rappl</address>. Zuletzt aktualisiert am <time datetime="2011-11-14T20:19Z" style="display: inline;">14.11.2011 um 21:19</time></footer>
+</body>
+</html>

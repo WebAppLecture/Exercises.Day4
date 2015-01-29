@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Lösung zur 18. Aufgabe</title>
+<style>
+</style>
+</head>
+<body>
+<script>
+var rate = 1;
+
+function slowVideo() {
+	rate = Math.max(0, rate - 0.1);
+	playbackVideo();
+}
+function fastVideo() {
+	rate = Math.min(2, rate + 0.1);
+	playbackVideo();
+}
+function playbackVideo() {
+	var a = document.getElementById('video');
+	a.playbackRate = rate;
+	document.getElementById('playbackrate').innerHTML = "Die aktuelle Abspielrate beträgt " + Math.floor(rate * 100) + "%.";
+}
+function setDuration() {
+	var a = document.getElementById('video');
+	document.getElementById('playtime').innerHTML = "Die aktuelle Abspielzeit beträgt " + Math.floor(a.currentTime) + " s.";
+}
+</script>
+<video id="video" controls poster="http://2.bp.blogspot.com/-Z9QJJ91YzPk/TcezW9FbcZI/AAAAAAAAALw/Gju9FLFbdME/s1600/lady-gaga-poker-face2.jpg" width="479" height="323" ontimeupdate="setDuration();" onended="alert('Video abgespielt!');">
+<source src="http://introducinghtml5.com/examples/ch04/leverage-a-synergy.ogv" type="video/ogg" />
+<source src="http://introducinghtml5.com/examples/ch04/leverage-a-synergy.mp4" type="video/mpeg" />
+Ihr Browser unterstützt noch kein HTML5-Video! Bitte laden Sie sich einen modernen Browser wie <a href="http://opera.com" target="_blank">herunter</a>.
+</video>
+<div id="controls"><button onclick="slowVideo();">Langsamer</button><button onclick="fastVideo();">Schneller</button></div>
+<div id="playbackrate">Die aktuelle Abspielrate beträgt 100%.</div>
+<div id="playtime">Die aktuelle Abspielzeit beträgt 0 s.</div>
+<footer>&copy; <address style="display: inline;">Florian Rappl</address>. Zuletzt aktualisiert am <time datetime="2011-11-14T20:45Z" style="display: inline;">14.11.2011 um 21:45</time></footer>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Lösung zur 19. Aufgabe</title>
+<style>
+/* CSS - dazu lernen wir später mehr ! */
+input, select { display: block; width: 150px; height: 30px; border: 1px solid #CCC; margin: 10px 0; }
+select { margin-top: 0; width: 250px; box-sizing: content-box; }
+input:before { display: inline-block; width: 90px; padding-left: 10px; text-align: left; }
+#x:before { content: 'X'; }
+#y:before { content: 'Y'; }
+#w:before { content: 'Breite'; }
+#h:before { content: 'Höhe'; }
+#d:before { content: 'Dicke'; }
+#stroke:before { content: 'Rahmen'; }
+#fill:before { content: 'Füllung'; }
+button { border-radius: 5px; width: 150px; height: 30px; margin: 10px 0 0 100px; background: #CCC; border: 1px solid #666; box-shadow: 0 3px 3px #333; display: block; }
+button:hover { background: #DDD; cursor: pointer; }
+#controls { float: left; margin-right: 20px; }
+#frame { display: inline-block; }
+p { display: inline-block; width: 320px; }
+p.left { text-align: left; }
+p.right { text-align: right; }
+</style>
+<script>
+//Hier stehen die notwendigen JavaScript Codezeilen
+var	x = 320,
+	y = 240, 
+	typ = 0,
+	w = 50,
+	h = 50,
+	d = 1,
+	stroke = '#CCCCCC',
+	fill =  '#FFAA00';
+
+function setHandlers() {
+	//Change EventHandler festlegen (mit Standardwerten)
+	document.getElementById('x').onchange = function() { x = this.value * 1 || 0; this.value = x; };
+	document.getElementById('y').onchange = function() { y = this.value * 1 || 0; this.value = y; };
+	document.getElementById('w').onchange = function() { w = this.value * 1 || 1; this.value = w; };
+	document.getElementById('h').onchange = function() { h = this.value * 1 || 1; this.value = h; };
+	document.getElementById('d').onchange = function() { d = this.value * 1 || 1; this.value = d; };
+	document.getElementById('type').onchange = function() { typ = this.value * 1 || 0; };
+	document.getElementById('stroke').onchange = function() { stroke = this.value; };
+	document.getElementById('fill').onchange = function() { fill = this.value; };
+}
+
+//Zeichenmethode
+function draw() {
+	//Zunächst holen wir unseren Canvas-Zeichenkontext
+	var c = document.getElementById('canvas').getContext('2d');
+	//Setzen die Zeichenstile
+	c.strokeStyle = stroke;
+	c.fillStyle = fill;
+	c.lineWidth = d;
+	//Abfrage des Typs => Zeichnung
+	switch(typ) {
+		case 1:
+			//Dreieck ist ein Pfad
+			c.beginPath();
+			//Zum Startpunkt
+			c.moveTo(x,y);
+			c.lineTo(x + w / 2, y + h);//Zum oberen Punkt - Hälfte des Weges, ganz hoch
+			c.lineTo(x + w, y);//Rechter Punkt - ganzer Weg, unten
+			//Pfad schließen - rechter Punkt und linker Punkt (Startpunkt) werden verbunden
+			c.closePath();
+			c.fill();
+			c.stroke();
+			break;
+		case 2:
+			//Straight-Forward mit FillRect etc.
+			c.fillRect(x, y, w, h);
+			c.strokeRect(x, y, w, h);
+			break;
+		case 3:
+			//Hier wirds tricky... Brauchen Koordinatentrafo - daher aktueller Zustand speichern
+			c.save();
+			//Skalieren die Y-Achse
+			c.scale(1, h / w);
+			//Wieder einen Pfad beginnen
+			c.beginPath();
+			//Zeichnen einen Kreis (der je nach Koordinatentrafo verzerrt wird => Ellipse)
+			c.arc(x + w / 2, w * y / h + w / 2, w / 2, 0, Math.PI * 2, false);
+			//Wollen nicht vom letzten zum ersten Punkt verbunden - müssen jetzt füllen
+			c.fill();
+			c.stroke();
+			//Abschließen
+			c.closePath();
+			//Koordinatentrafo rückgängig
+			c.restore();
+			break;
+		default:
+			//Linie wie in der Vorlesung mit einem Pfad
+			c.beginPath();
+			c.moveTo(x, y);
+			c.lineTo(x + w, y + h);
+			//Wir zeichnen drinnen (im Pfad), da mit closePath() automatisch der letzte mit dem ersten Punkt verbunden wird
+			c.stroke();
+			c.closePath();
+			break;
+	}
+}
+
+function exportImage() {
+	//Fenster öffnen mit der Data-URL
+	var w = window.open(document.getElementById('canvas').toDataURL('image/png'));
+	return false;
+}
+
+function resetImage() {
+	//Zurücksetzen durch löschen des Canvases
+	var c = document.getElementById('canvas');
+	c.getContext('2d').clearRect(0,0, c.width, c.height);
+	return false;
+}
+</script>
+</head>
+<body onload="setHandlers();">
+<!-- Der Canvas -->
+<div id="frame">
+<canvas id="canvas" height=480 width=640 style="border:1px solid #CCC">
+</canvas>
+<!-- Noch ein paar mehr Funktionen -->
+<div id="further">
+<p class="left"><a href="#" onclick="return exportImage();">Speichern</a></p><p class="right"><a href="#" onclick="return resetImage();">Zurücksetzen</a></p>
+</div>
+</div>
+<!-- Die Steuerelemente -->
+<div id="controls">
+<select id="type">
+<option value="0">Linie</option>
+<option value="1">Dreieck</option>
+<option value="2">Rechteck</option>
+<option value="3">Ellipse</option>
+</select>
+<input type="range" placeholder="x" id="x" value=320 min=0 max=640 />
+<input type="range" placeholder="y" id="y" value=240 min=0 max=480 />
+<input type="number" placeholder="Breite" id="w" min=1 max=800 value=50 />
+<input type="number" placeholder="Höhe" id="h" min=1 max=800 value=50 />
+<input type="range" placeholder="Dicke" id="d" min=1 max=25 value=1 />
+<input type="color" placeholder="Rahmenfarbe" id="stroke" value="#CCCCCC" />
+<input type="color" placeholder="Füllfarbe" id="fill" value="#FFAA00" />
+<button type="button" onclick="draw();">Zeichnen</button>
+</div>
+<footer>&copy; <address style="display: inline;">Florian Rappl</address>. Zuletzt aktualisiert am <time datetime="2011-11-15T08:13Z" style="display: inline;">15.11.2011 um 09:13</time></footer>
+</body>
+</html>

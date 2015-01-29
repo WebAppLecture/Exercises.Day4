@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Lösung zur 20. Aufgabe</title>
+<style>
+</style>
+<script>
+var	g, //Variable für Gradienten
+	c, //Variable für Canvas-Context (sichtbar)
+	copy;//Variable für Canvas-Context (unsichtbar)
+
+function init() {
+	//Hier kommt der JavaScript-Code rein
+	c = document.getElementById('canvas').getContext('2d');
+	copy = document.getElementById('sourcecopy').getContext('2d');
+	//diagonalen Gradienten hinzufügen
+	g = c.createLinearGradient(0, 0, c.canvas.width, c.canvas.height);
+	g.addColorStop(0, '#ABCDEF');
+	g.addColorStop(1, '#FEDCAB');
+	//Schleife starten - gepulst auf 40 ms
+	setInterval(draw, 40);
+}
+
+function draw() {
+	//aktuellen Frame zeichnen (auf verstecktem Canvas)
+	copy.drawImage(document.getElementById('sourcevid'), 0, 0);
+	//sichtbaren Canvas löschen
+	c.clearRect(0, 0, c.canvas.width, c.canvas.height);
+	//Gradienten zeichnen
+	c.fillStyle = g;
+	c.fillRect(0, 0, c.canvas.width, c.canvas.height);
+	//den versteckten Canvas befüllen - vergrößere (doppelte Größe) hierbei die Ausschnitte
+	c.drawImage(copy.canvas, 0, 0, 300, 200, c.canvas.width - 600, c.canvas.height - 400, 600, 400);//Ausschnitt 1
+	c.drawImage(copy.canvas, 300, 200, 100, 66, 0, 0, 200, 132);//Ausschnitt 2
+}
+</script>
+</head>
+<body>
+<!-- Unser sichtbarer Canvas -->
+<canvas id="canvas" width="800" height="532">
+</canvas>
+<div style="display:none">
+<!-- Wichtig: Wir setzen nicht volume="0" - d.h. wir lassen AUDIO weiterlaufen -->
+<video id="sourcevid" autoplay="true" loop="true" onplay="init();" width="400" height="266">
+<source src="http://introducinghtml5.com/examples/ch04/leverage-a-synergy.mp4" type="video/mp4"/>
+<source src="http://introducinghtml5.com/examples/ch04/leverage-a-synergy.ogv" type="video/ogg"/>
+</video>
+<!-- Unsichtbarer Canvas -->
+<canvas id="sourcecopy" width="400" height="266"></canvas>
+</div>
+<footer>&copy; <address style="display: inline;">Florian Rappl</address>. Zuletzt aktualisiert am <time datetime="2011-11-15T12:52Z" style="display: inline;">15.11.2011 um 13:52</time></footer>
+</body>
+</html>
