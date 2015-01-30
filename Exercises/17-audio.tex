@@ -1,0 +1,33 @@
+\RequiredExercise{Multimedia mit \htag{audio}}
+%
+\par Erstellen Sie eine Webseite die ein \htag{audio}-Element, sowie vier
+Buttons (Stopp, Abspielen / Pause, Langsamer, Schneller) enthält. Für das
+Element sollen folgende Angaben gelten:
+%
+\begin{itemize}
+\item
+Erstellen Sie das Element ohne Controls.
+\item
+Geben Sie die Quelle nicht über das \jvar{src}-Attribut an, sondern über
+\htag{source}-Elemente.
+\item
+Folgende Quellen sollen verwendet werden:
+\url{http://html5.florian-rappl.de/sample.mp3} (MP3-Format) und
+\url{http://html5.florian-rappl.de/sample.ogg} (OGG Vorbis-Codec).
+\item
+Das Element soll über die Buttons durch JavaScript gesteuert werden. Um den
+letzten Punkt zu verwirklichen müssen Sie das \jvar{onclick}-Ereignis der
+Buttons setzen. Um die entsprechenden Funktionalitäten zu implementieren werden
+Sie folgende Methoden des Audioelements benötigen:
+\item
+Die Eigenschaften paused und ended gibt Ihnen Auskunft über den aktuellen
+Zustand.
+\item
+Mit den Methoden \jfunc{play} und \jfunc{pause} steuern Sie den aktuellen
+Zustand. Die aktuelle Zeit setzen Sie über die Eigenschaft
+\jvar{currentTime}\footnote{In einigen Browser ist das Setzen von
+\jvar{currentTime} und \jvar{playbackRate} noch nicht implementiert.}.
+\item
+Mit der Eigenschaft playbackRate können Sie die Geschwindigkeit einstellen
+($1$ entspricht hier \qty{100}{\%}, d.h. normale Geschwindigkeit).
+\end{itemize}
