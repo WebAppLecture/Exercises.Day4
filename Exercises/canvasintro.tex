@@ -1,0 +1,18 @@
+\RequiredExercise{Zeichnen dank \htag{canvas}}
+%
+\par Es soll nun eine WebApplikation zum Zeichnen von primitiven Grafiken entwickelt werden. Sie benötigen hierzu ein \htag{canvas}-Element, sowie mehrere HTML-Forms Elemente.
+%
+\par Über ein \htag{select}-Element soll der Benutzer entsprechende Aktionen (z.B. Rechteck (\jfunc{rect}), Linie (offener Pfad zu einem Punkt), Dreieck (geschlossener Pfad zu zwei Punkten), Kreis (\jfunc{arc}), ...) mit Koordinaten und Längenangaben (hier wären numerische Eingabeboxen sehr passend) auswählen.
+%
+\par Außerdem werden zwei Color-Boxen (Füllfarbe und Rahmenfarbe), sowie ein Range-Slider für die Rahmendicke benötigt. Beim Klick auf einen Button soll die entsprechende Zeichnung eingefügt werden.
+%
+\par Fügen Sie außerdem noch zwei zusätzliche Buttons oder Hyperlinks mit folgenden Funktionalitäten hinzu:
+%
+\begin{itemize}
+\item Das Canvas zurücksetzen (als Füllfarbe soll die zurzeit ausgewählte Füllfarbe verwendet werden)
+\item Das derzeitige Bild als PNG speichern
+\end{itemize}
+%
+\Remark{Tipp zum Speichern des Bildes ans PNG.}
+%
+\par Öffnen Sie ein neues Fenster und verwenden die mit \jvar{toDataURL('image/png')} generierte Adresse. Vorsicht: Verwenden Sie keine DOM Manipulationen wie z.B. \jfunc{createElement}!

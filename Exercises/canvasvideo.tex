@@ -1,0 +1,15 @@
+\Exercise{Video und Canvas – Gemeinsam mehr erreichen}
+%
+\par Canvas an sich wäre schon fast langweilig wenn da nicht noch das neue Videoelement hinzukäme. In dieser Aufgabe verbinden Sie die beiden Elemente um einen sehr einfachen dynamischen Effekt zu erzeugen. Was Sie dazu brauchen ist eine Webseite mit einem \htag{canvas}-Element, einem nicht angezeigten \htag{div} , welches ein \htag{video} sowie ein weiteres <canvas> enthält und ein wenig JavaScript. Verwenden Sie als Videoquellen wieder das bereits bekannte Synergy Video aus Aufgabe 18.
+%
+\par Folgender Aufbau ist hilfreich: Setzen Sie die Attribute des \htag{video}-Elements \jvar{autoplay=true} und \jvar{loop=true}. Sobald das Video geladen hat sollten Sie dann in entsprechenden Abständen (z.B. in \qty{40}{ms} Pulsen) in das (versteckte, d.h. im \htag{div}-Container enhaltene) Canvas zeichnen. Übergeben Sie hierzu einfach das Videoelement der \jfunc{drawImage} Methode des Canvas Contexts:
+%
+\begin{lstlisting}
+mycontext.drawImage(bild, sx, sy, sw, sh, dx, dy, dw, dh);
+\end{lstlisting}
+%
+\par Abschließend zeichnen Sie auf das (sichtbare) Canvas. Hierzu sollen Sie folgendermaßen vorgehen:
+%
+\input{Figures/videocut.tex}
+
+\par Dies bedeutet, dass Sie zwei Ausschnitte aus dem Videobild versetzt zeichnen und den Rest mit einer entsprechenden Füllung versehen. Diese muss nicht einheitlich sein, sondern kann von Ihnen frei entschieden werden.
