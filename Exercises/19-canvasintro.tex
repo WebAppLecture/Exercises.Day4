@@ -26,6 +26,5 @@ Das derzeitige Bild als PNG speichern.
 %
 \Remark{Tipp zum Speichern des Bildes ans PNG.}
 %
-\par Öffnen Sie ein neues Fenster und verwenden die mit
-\jvar{toDataURL('image/png')} generierte Adresse. Vorsicht: Verwenden Sie keine
+\par Öffnen Sie ein neues Fenster mit \jvar{window.open(...)} und verwenden die mit\\\jvar{[CanvasObject].toDataURL('image/png')} generierte Adresse. Vorsicht: Verwenden Sie keine
 DOM Manipulationen wie z.B. \jfunc{createElement}!
